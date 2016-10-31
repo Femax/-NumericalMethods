@@ -1,4 +1,4 @@
-package ru.advantum.fedosov.numericmethods;
+package ru.fedosov.numericmethods;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -10,8 +10,8 @@ import android.view.WindowManager;
 
 import java.util.ArrayList;
 
-import ru.advantum.fedosov.numericmethods.model.Point;
-import ru.advantum.fedosov.numericmethods.widget.MainDrawPanel;
+import ru.fedosov.numericmethods.model.Point;
+import ru.fedosov.numericmethods.widget.MainDrawPanel;
 
 public class DrawActivity extends Activity {
     private static final String EXTRA_H = "EXTRA_H";
@@ -24,8 +24,6 @@ public class DrawActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_draw);
-        ArrayList<Point> numbericResults = new ArrayList();
-        ArrayList<Point> realResults = new ArrayList();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             double value = extras.getDouble(EXTRA_H);

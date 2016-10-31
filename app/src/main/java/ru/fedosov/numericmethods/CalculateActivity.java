@@ -1,4 +1,4 @@
-package ru.advantum.fedosov.numericmethods;
+package ru.fedosov.numericmethods;
 
 import android.app.Activity;
 import android.content.Intent;

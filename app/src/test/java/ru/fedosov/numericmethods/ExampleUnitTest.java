@@ -1,4 +1,4 @@
-package ru.advantum.fedosov.numericmethods;
+package ru.fedosov.numericmethods;
 
 import org.junit.Test;
 

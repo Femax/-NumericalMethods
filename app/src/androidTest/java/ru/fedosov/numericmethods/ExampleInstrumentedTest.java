@@ -1,4 +1,4 @@
-package ru.advantum.fedosov.numericmethods;
+package ru.fedosov.numericmethods;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ru.advantum.fedosov.numericmethods", appContext.getPackageName());
+        assertEquals("ru.fedosov.numericmethods", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package ru.advantum.fedosov.numericmethods.model;
+package ru.fedosov.numericmethods.model;
 
 /**
  * Created by fedosov on 10/31/16.

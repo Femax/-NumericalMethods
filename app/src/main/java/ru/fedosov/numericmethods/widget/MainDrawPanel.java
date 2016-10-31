@@ -1,4 +1,4 @@
-package ru.advantum.fedosov.numericmethods.widget;
+package ru.fedosov.numericmethods.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,7 +9,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import ru.advantum.fedosov.numericmethods.model.Point;
+import ru.fedosov.numericmethods.model.Point;
 
 /**
  * Created by fedosov on 10/27/16.
