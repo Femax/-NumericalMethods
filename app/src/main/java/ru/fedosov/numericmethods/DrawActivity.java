@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 import ru.fedosov.numericmethods.model.Point;
 import ru.fedosov.numericmethods.widget.MainDrawPanel;
@@ -45,37 +47,59 @@ public class DrawActivity extends Activity {
             initializeMatrix(n, h, matrix);
 
             for (int i = 1; i < n; i++) {
-                matrix[i][n+1] = h * h;
+                matrix[i][n] = h * h;
+                if(i==1) matrix[i][n]=matrix[i][n]-1;
             }
+
+            matrixToLog(matrix,n);
+
             calculateAlphaBetta(n, h, matrix, alpha, betta);
+            numericPoints.add(new Point(0,1));
+            realPoints.add(new Point(0,1));
             for (int i = 1; i < n; i++) {
-                numericPoints.add(new Point(i * h, (matrix[i][n] - matrix[i][i - 1] * betta[i]) / (matrix[i][i] + matrix[i][i - 1] * alpha[i])));
+                numericPoints.add(new Point(i * h, (matrix[i][n] - matrix[i][i-1] * betta[i]) / (matrix[i][i] + matrix[i][i - 1] * alpha[i])));
+                realPoints.add(new Point(i*h,function(i*h)));
             }
-            Pair<ArrayList<Point>, ArrayList<Point>> data = new Pair<>(numericPoints, realPoints);
-            return data;
+            numericPoints.add(new Point(1,0));
+            realPoints.add(new Point(1,0));
+            return new Pair<>(numericPoints, realPoints);
+        }
+
+        private void matrixToLog(double[][] matrix, int n) {
+            StringBuilder sb = new StringBuilder();
+            for(int i=0;i < n;i++){
+                for(int j=0;j<n;j++){
+                    sb.append(matrix[i][j]);
+                    sb.append(" ");
+                }
+                sb.append("\r\n");
+            }
+            Log.d("matrix",sb.toString());
         }
 
         private void calculateAlphaBetta(int n, double h, double[][] matrix, double[] alpha, double[] betta) {
             alpha[n] = -matrix[n - 1][n] / matrix[n - 1][n - 1];
-            betta[n] = -matrix[n - 1][n + 1] / matrix[n - 1][n - 1];
+            betta[n] = matrix[n - 1][n + 1] / matrix[n - 1][n - 1];
             for (int i = 1; i < n-1; i++) {
                 alpha[n - i] = -matrix[n - i][n - i] / (matrix[n - i][n - i + 1] * alpha[i] + matrix[n - i][n - i]);
-                betta[n - i] = (matrix[n - i][n + i] - matrix[n - i][n - i - 1]) / (matrix[n - i][n - i - 1] * alpha[i] + matrix[n - i][n - i]);
-
+                betta[n - i] = (matrix[n - i][n + 1] - matrix[n - i][n - i - 1]) / (matrix[n - i][n - i - 1] * alpha[i] + matrix[n - i][n - i]);
             }
         }
 
         private void initializeMatrix(int n, double h, double[][] matrix) {
             for (int i = 1; i < n; i++) {
-                for (int j = 1; j < n; j++) {
-                    if (i == j) matrix[i][j] = 2 + h * h;
+                for (int j = 0; j < n; j++) {
+                    if (i == j) matrix[i][j] = -2 - h * h;
                     else if (Math.abs(i - j) == 1) {
                         matrix[i][j] = 1;
+                        if(i==1&&j==0) matrix[i][j]=0;
                     }
                 }
             }
         }
-
+        private double function(double x){
+            return Math.exp(-1)*(Math.exp(x)-2*Math.exp(2*x)-Math.exp(x+2)+Math.exp(2*x+1)-Math.exp(1)+2*Math.exp(2))/(Math.exp(2)-1);
+        }
         @Override
         protected void onPostExecute(Pair<ArrayList<Point>, ArrayList<Point>> Data) {
             super.onPostExecute(Data);

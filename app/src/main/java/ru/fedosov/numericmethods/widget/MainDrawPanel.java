@@ -19,15 +19,19 @@ public class MainDrawPanel extends View {
 
     ArrayList<Point> numbericResults;
     ArrayList<Point> realResults;
-    Paint mPaint;
+    Paint mPaintNumberic;
+    Paint mPaintReal;
 
     public MainDrawPanel(Context context, ArrayList<Point> numbericResults, ArrayList<Point> realResults) {
         super(context);
         this.numbericResults = numbericResults;
         this.realResults = realResults;
-        mPaint = new Paint();
-        mPaint.setStrokeWidth(2);
-        mPaint.setColor(Color.RED);
+        mPaintNumberic = new Paint();
+        mPaintNumberic.setStrokeWidth(2);
+        mPaintNumberic.setColor(Color.RED);
+        mPaintReal = new Paint();
+        mPaintReal.setStrokeWidth(2);
+        mPaintReal.setColor(Color.BLUE);
     }
 
     public MainDrawPanel(Context context, AttributeSet attrs) {
@@ -45,11 +49,19 @@ public class MainDrawPanel extends View {
 
         drawOs(canvas);
         for (int i = 0; i < numbericResults.size() - 1; i++) {
-            canvas.drawLine((float) numbericResults.get(i).getX() + canvas.getWidth() / 2
-                    , canvas.getHeight() / 2 - (float) numbericResults.get(i).getY()
-                    , (float) numbericResults.get(i + 1).getX() + canvas.getWidth() / 2
-                    , canvas.getHeight() / 2 - (float) numbericResults.get(i + 1).getY()
-                    , mPaint);
+            float startX = (float) numbericResults.get(i).getX()*canvas.getHeight()/3 + canvas.getWidth() / 2;
+            float startY = canvas.getHeight() / 2 - (float) numbericResults.get(i).getY()*canvas.getWidth()/3;
+            float endX = (float) numbericResults.get(i + 1).getX()*canvas.getHeight()/3 + canvas.getWidth() / 2;
+            float endY = canvas.getHeight() / 2 - (float) numbericResults.get(i + 1).getY()*canvas.getWidth()/3;
+            canvas.drawLine(startX, startY, endX, endY, mPaintNumberic);
+        }
+
+        for (int i = 0; i < realResults.size() - 1; i++) {
+            float startX = (float) realResults.get(i).getX()*canvas.getHeight()/3 + canvas.getWidth() / 2;
+            float startY = canvas.getHeight() / 2 - (float) realResults.get(i).getY()*canvas.getWidth()/3;
+            float endX = (float) realResults.get(i + 1).getX()*canvas.getHeight()/3 + canvas.getWidth() / 2;
+            float endY = canvas.getHeight() / 2 - (float) realResults.get(i + 1).getY()*canvas.getWidth()/3;
+            canvas.drawLine(startX, startY, endX, endY, mPaintReal);
         }
 
     }
